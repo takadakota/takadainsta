@@ -1,0 +1,87 @@
+header {
+	padding: .5em .75em;
+	background-color: #f6f6f6;
+	border: 3px double #ccc;
+}
+
+richbtn {/*ログインボタンの見た目変えてるだけ*/
+	position: relative;
+	display: inline-block;
+	font-weight: bold;
+	padding: 3em 3em;
+	text-decoration: none;
+	color: #00BCD4;
+	background: #ECECEC;
+	transition: .4s;
+}
+
+richbtn:hover {
+	background: #00bcd4;
+	color: white;
+}
+
+button.button1 {
+    /* 文字サイズを1.4emに指定 */
+    font-size: 1.4em;
+    /* 文字の太さをboldに指定 */
+    font-weight: bold;
+    /* 縦方向に10px
+     * 横方向に30pxの余白を指定 */
+    padding: 10px 30px;
+
+    /* ボーダーをなくす */
+    border-style: none;
+}
+
+button.button2 {
+    /* 文字サイズを1.4emに指定 */
+    font-size: 1.4em;
+    /* 文字の太さをboldに指定 */
+    font-weight: bold;
+    /* 縦方向に10px
+     * 横方向に30pxの余白を指定 */
+    padding: 10px 30px;
+    /* 背景色を濃い青色に指定 */
+    background-color: #248;
+    /* 文字色を白色に指定 */
+    color: #fff;
+    /* ボーダーをなくす */
+    border-style: none;
+}
+
+
+img {
+		width: 100px;
+		height: 100px;
+		object-fit: contain;
+		}
+.inner_photo{/*ぴったり画像を収めたいcss、画像に適用。*/
+				    top: 0;
+				    bottom: 0;
+				    left: 0;
+				    right: 0;
+				    height: auto;
+				    width: auto;
+				    max-width: 100%;
+				    max-height: 100%;
+				    margin: auto;
+				}
+.usertweetimg{
+	width: 200px;
+	height: 200px;
+	object-fit: contain;
+}
+
+th,td {/*テーブルの見た目変えてるだけ*/
+		    border: solid 1px;              /* 枠線指定 */
+		}
+table {
+		    border-collapse:  collapse;     /* セルの線を重ねる */
+				table-layout: fixed;
+				word-wrap: break-word;
+		}
+
+		ol {/* ツイート全体の枠線 */
+  background: #f3fbff;
+  border: 2px skyblue dashed;
+}
