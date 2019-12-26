@@ -20,11 +20,11 @@ Route::get('/beforetweet', 'InstaController@beforetweet');
 
 Route::post('/favoritesuser', 'InstaController@favoritesuser');
 Route::post('/profile', 'InstaController@profile');//aタグはgetでしか渡せない?
-Route::get('/login', 'InstaController@login');
-Route::get('/logout', 'Auth\LoginController@logout');
+Route::post('/login', 'InstaController@login');
+Route::post('/logout', 'Auth\LoginController@logout');
 
-Route::get('login/github', 'Auth\LoginController@redirectToProvider');
-Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+Route::post('login/github', 'Auth\LoginController@redirectToProvider');
+Route::post('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
 //Route::get('/', function () {return view('welcome');});
 //Route::get('/user', 'UserController@index');

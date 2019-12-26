@@ -6,7 +6,7 @@
         <link href="insta.css" rel="stylesheet" type="text/css">
         <title>ログイン画面</title>
     </head>
-    <form action="{{ url('/login/github')}}" method="GET">
+    <form action="{{ url('/login/github')}}" method="POST">
     <center>
     <richbtn>
       <input type="submit" value="ログインする">
