@@ -60,7 +60,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider()// 追加！
     {
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver('github')->scopes(['read:user', 'public_repo'])->redirect();
     }//githubに接続する、権限の範囲はscope内
     /**
      * GitHubからユーザー情報を取得
