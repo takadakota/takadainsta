@@ -12,6 +12,7 @@
 */
 Auth::routes();
 
+Route::get('/', 'InstaController@home');
 Route::get('/home', 'InstaController@home');
 Route::post('/home', 'InstaController@upload');
 Route::post('/delete','InstaController@delete');
