@@ -11,14 +11,15 @@ class CreateTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up(){
+
+    //メモ：元々ログイン課題のuserテーブルだったが、マイグレートし直しでそのまま流用（とりあえず動く→裏の設定気にしなくてよさそうだから）
+    //12/11,19:19DB直接からモデル経由に手術
         Schema::create('user', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('comment')->nullable();
-            $table->string('github_id');
-            $table->timestamps();
+          $table->bigIncrements('user_id');
+          $table->string('github_id');//後のusername
+          $table->string('ico')->nullable();//画像パスになりそう？githubから持ってきかたわからん、とりあえずnullでもOKの設定
+          $table->timestamps();
         });
     }
 

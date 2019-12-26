@@ -16,7 +16,14 @@
         @endforeach
     </ul>
 @endif
-
+<!-- 投稿表示エリア（編集するのはここ！） -->
+@isset($bbs)
+@foreach ($bbs as $d)
+    <h2>{{ $d->name }}さんの投稿</h2>
+    {{ $d->comment }}
+    <br><hr>
+@endforeach
+@endisset
 
 <!-- フォームエリア -->
 <h2>フォーム</h2>

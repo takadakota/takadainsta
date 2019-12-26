@@ -11,14 +11,22 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+         * リレーション1223
+         */
+        public function favorites()
+        {
+            return $this->hasMany('App\Model\Favorite');
+        }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+    protected $primaryKey = 'user_id';//これがないと主キーが変更できないらしい
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','username','avatar',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
