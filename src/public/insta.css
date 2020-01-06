@@ -110,16 +110,16 @@ img {
 		object-fit: contain;
 		}
 .inner_photo{/*ぴったり画像を収めたいcss、画像に適用。*/
-				    top: 0;
-				    bottom: 0;
-				    left: 0;
-				    right: 0;
-				    height: auto;
-				    width: auto;
-				    max-width: 100%;
-				    max-height: 100%;
-				    margin: auto;
-				}
+		top: 0;
+		bottom: 0;
+	  left: 0;
+		right: 0;
+		height: auto;
+		width: auto;
+		max-width: 100%;
+		max-height: 100%;
+		margin: auto;
+		}
 .usertweetimg{
 	width: 200px;
 	height: 200px;
@@ -135,7 +135,7 @@ table {
 				word-wrap: break-word;
 		}
 
-		ol {/* ツイート全体の枠線 */
+ol {/* ツイート全体の枠線 */
   background: #f3fbff;
   border: 2px skyblue dashed;
 }
