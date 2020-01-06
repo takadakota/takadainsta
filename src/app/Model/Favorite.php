@@ -11,9 +11,9 @@ class Favorite extends Model
     /**
      * リレーション
      */
-    public function user()
+    public function getData()
     {
-        return $this->belongsTo('App\User');
+        return $this->favorite;
     }
     /**
      * リレーション

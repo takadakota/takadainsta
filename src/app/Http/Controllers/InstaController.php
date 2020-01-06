@@ -24,11 +24,8 @@ class InstaController extends Controller
     }
 
     public function home(Request $request){
-      //リレーションでやりたいこと書き出し
       //ログインしてる人がいいねしてるツイートのデータを抜き出したい
       //ログインしている人のuser_id（単数）のデータと一致するtweet_id（複数）を取得する
-      //$favorites = User::find(Auth::id())->favorites;//リレーション、ログインしてる人のいいね状態取得
-      //$favorites = Favorite::where('user_id',Auth::id())->get;//上と同義
       $favorites = Favorite::get();//いいね！に関しては全部取得して、条件絞りをHTMLで行っている
       $Tweet = Tweet::orderBy('tweet_id', 'desc')->simplePaginate(3);//ツイート全部を読み込んで降順に並び替えてる、仕様は１ページ１０ツイートだけどテスト用で３ツイート
       return view('insta/home', ["Tweet" => $Tweet,"favorites"=>$favorites]); //, "favstate"=>$favstate]);//maruとbatsuがnullか１かでいいねしてるかどうか判定する（ゴリ押し感）
@@ -93,15 +90,13 @@ class InstaController extends Controller
           $path = $request->file('file')->store('public');//ツイートされた画像を保存
           $filename = basename($path);//basename()→（）のいる場所を除いたパスデータ
           $caption = $request -> input('caption');//inputの使い方とか時間があれば細かく見たい、requestとセットで使うのでは
-          $user = Auth::user();//Userテーブルから持ってくるとデータが汚いからログイン情報から読み込む、　"カラム名:〜"　みたいになる
+          $user = Auth::user();//Userテーブルからget()で持ってくるとデータがコレクション型で　"カラム名:〜"　みたいになる
           $user_id = $user->user_id;
           $username = $user->username;
           $avatar = $user->avatar;
           $now = date("Y/m/d H:i:s");//ツイートしたときの日付時刻データ、降順するのに使う
           $tweet_id = Tweet::create(['user_id'=>$user_id,'username'=>$username ,'avatar'=>$avatar, 'imagepath'=>$filename , 'caption'=>$caption ,'created_at'=>$now, 'updated_at'=>$now]);
           Favorite::create(['tweet_id'=>$tweet_id->tweet_id ,'user_id'=>$user_id,'favorite'=>null,'created_at'=>$now, 'updated_at'=>$now]);
-        //名残  //$Tweet = Tweet::orderBy('tweet_id', 'desc')->get();//desc降順asc昇順、データとセットで使う
-          //$Tweet = Tweet::simplePaginate(3);//simpleつけるとNextとPrevだけにできる（大量にあるときに有効）、こんな雑な１行でページ機能付与できるのすごい
           return redirect('/home');//redirectにした、そのため「, ["Tweet" => $Tweet]」の引数渡しはルーティング後のhome関数で呼び出されてる
       }else {
           return redirect()

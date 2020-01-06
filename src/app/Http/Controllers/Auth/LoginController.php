@@ -42,14 +42,10 @@ class LoginController extends Controller
           $this->middleware('guest')->except('logout');//このコントローラ内でguestがアクションするとlogoutに飛ばす
     }
 
-    // ログアウト追加12/11、なんか反応しない(元から)12/19
+    // ログアウト追加12/11、なんか反応しない(元から)12/19、postLogoutという名前に変えてたりとデフォルトから設定がズレてただけというオチ
     public function logout()
     {
-      //auth()->logout();
       Auth::logout();//最有力
-      //$user=User::where('user_id',Auth::id())->get();
-      //auth()->logout($user);//logout周りしっかりやらないとダメ、最後にやるでよさそう12/19
-      //return route('logout')
       return redirect('/home');
     }
 
@@ -67,15 +63,13 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function handleProviderCallback(Request $request)//どうやら上のメソッドで許可OKってなるとここに戻ってくるらしい
+     public function handleProviderCallback(Request $request)//上のメソッドのredirectでここにくる、config/service参照
      {
          $github_user = Socialite::driver('github')->user();//'github'から送られたユーザ情報を取得
          $github_avatar = $github_user->avatar;
          $instausers=User::firstOrCreate(['username'=>$github_user->user['login'],'avatar'=>$github_avatar]);//あったら取り出す、なきゃつくる
-         //$request->session()->put('github_token', $github_user->token);//この書き方は「sessionへデータを保存するという意味」put(1,2)で１に２を保存
-         //sessionがAuthの機能？
          auth()->login($instausers);//ログイン
          return redirect('/home');
-         //viewだと引数渡せる？けど直接ファイルを開く操作だからCSSが読み込まれない
+         //viewだと引数渡せる？けど直接ファイルを開く操作だからCSSが読み込まれないぽい
      }
 }

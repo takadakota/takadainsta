@@ -11,7 +11,7 @@ class Tweet extends Model
     /**
      * リレーション１２２３
      */
-     public function favorites()
+     public function favorite()
      {
          return $this->hasMany('App\Model\Favorite');//第２引数にtweet_idは試した12/26
      }
