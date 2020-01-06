@@ -27,8 +27,8 @@ class InstaController extends Controller
       //ログインしてる人がいいねしてるツイートのデータを抜き出したい
       //ログインしている人のuser_id（単数）のデータと一致するtweet_id（複数）を取得する
       $favorites = Favorite::get();//いいね！に関しては全部取得して、条件絞りをHTMLで行っている
-      $Tweet = Tweet::orderBy('tweet_id', 'desc')->simplePaginate(3);//ツイート全部を読み込んで降順に並び替えてる、仕様は１ページ１０ツイートだけどテスト用で３ツイート
-      return view('insta/home', ["Tweet" => $Tweet,"favorites"=>$favorites]); //, "favstate"=>$favstate]);//maruとbatsuがnullか１かでいいねしてるかどうか判定する（ゴリ押し感）
+      $Tweet = Tweet::orderBy('tweet_id', 'desc')->simplePaginate(3);//ツイート全部を読み込んで降順に並び替えてる
+      return view('insta/home', ["Tweet"=>$Tweet,"favorites"=>$favorites]);
     }
 
     public function beforetweet(Request $request){
@@ -41,14 +41,11 @@ class InstaController extends Controller
       }
 
     public function favoritesuser(Request $request){
-      //favoritesテーブル作ってそこにいる名前の人をViewで表示させたい
-      //クリックしたツイートをいいねしている人のuser_id（複数）をtweet_idから取得
-      //そのuser_id（複数）に紐づいたアイコン、ユーザ名を取得
-      $tweet_id = $request->input('tweet_id');//tweet_idの中身：tweet_id
-      $favusers = Favorite::where('tweet_id',$tweet_id)->where('favorite',1)->get()->toArray();//tweet_idが一致している行を取得、リレーションお試しポイント
-      //$favusers = Favorite::where('tweet_id',$tweet_id)->where('favorite',1)->pluck('user_id');//ツイートに対して誰がいいねしてるか配列型で取得
-      $usersdata = User::whereIn('user_id',$favusers)->get();//配列で受け取る時はWhereIn、$favusers->get('user_id')、ここの書き方チェック
-      return view('insta/favoritesuser',["usersdata"=>$usersdata]);
+      //Whereの第２引数に複数の値を入れたい！→View側でforeach入れ子で実装、実装後：こっちでif文とか使えば別にできたような気がする。
+      $tweet_id = $request->input('tweet_id');//tweet_idの中身：tweet_id。。。のはずがなぜか空白になる1/6、解決：javascriptの部分のform id名が一緒だった
+      $favusers = Favorite::where('tweet_id',$tweet_id)->get();//tweet_idが一致していていいねしている行を取得、いいねしてるかなど細かい判定はViewで行う
+      $usersdata = User::get();//一番新しいtweet_idに引っ張られる→わざわざ実装したjavascriptが悪さしてたのでaタグでの値渡しをボツにして解決
+      return view('insta/favoritesuser',["tweet_id"=>$tweet_id,"favusers"=>$favusers,"usersdata"=>$usersdata]);
     }
 
     public function profile(Request $request){
@@ -56,14 +53,14 @@ class InstaController extends Controller
       //いいね数カウント実装12/19
       $user_id = $request->input('user_id');
       $usertweet = Tweet::where('user_id',$user_id)->orderBy('created_at', 'desc')->get();//12/19クリックしたユーザの名前に対応するつぶやきを取得
-      $username = User::where('user_id',$user_id)->value('username');
+      $username = User::where('user_id',$user_id)->value('username');//個別に取り出してるのはforeachを使わないから
       $avatar = User::where('user_id',$user_id)->value('avatar');
       $count = Favorite::where('user_id',$user_id)->where('favorite',1)->count();//ここリレーションお試しポイント
       //$count = Tweet::where('user_id',$user_id)->favorites()->where('favorite',1)->count();//リレーションしたかったけどうまくいかない
       return view('insta/profile', ["usertweet" => $usertweet,"count"=>$count,"username"=>$username,"avatar"=>$avatar]);
     }
 
-    //viewで指定するのはファイルの位置っぽい→Viewはinsta/〜にしましょう
+    //viewで指定するのはファイルの位置っぽい→Viewはinsta/〜にする
 
     /**
     * ファイルアップロード処理
@@ -107,7 +104,7 @@ class InstaController extends Controller
 }
     public function delete(Request $request)//つぶやきテーブルのレコードを消したい
     {//消す標的はtweet_idで決めたい
-      $delete_id = $request -> input('delete_id');//hiddenで持ってきた、name:delete_id、value:tweet_id
+      $delete_id = $request -> input('delete_id');//hiddenで持ってきた、delete_idの中身ばtweet_id
       Tweet::find($delete_id) -> delete();
       Favorite::where('tweet_id',$delete_id) -> delete();//Favoriteからも対象tweet_idのものを削除する必要がある
       //$favorites = Tweet::find($delete_id)->favorites;//この←と↓２行はリレーションの動作確認みたいな、ほんとに理解してるか使えるかテスト、ダメでした12/25/15:23

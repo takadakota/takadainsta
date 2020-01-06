@@ -13,9 +13,10 @@
     </head>
   <body>
     <center>
+    <br>
     <table class="profiletable" width="350" height="100">
       <tr>
-        <th width="100"><img src="{{ $avatar }}" class="inner_photo"></th>
+        <th width="100" style="border-style: none;"><img src="{{ $avatar }}" class="inner_photo"></th>
         <th width="100" style="border-style: none;">{{ $username }}</th>
         <th width="150" style="border-style: none;">いいね合計数：{{ $count }}</th>
       </tr>
@@ -27,7 +28,9 @@
   </center>
       @isset ($usertweet)
       @foreach($usertweet as $tweet)
+        <div class="inline-block">
           <img src="{{ asset('storage/' . $tweet->imagepath) }}" class="usertweetimg">
+        </div>
       @endforeach
       @endisset
     </ol>

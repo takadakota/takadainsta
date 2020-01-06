@@ -139,3 +139,20 @@ ol {/* ツイート全体の枠線 */
   background: #f3fbff;
   border: 2px skyblue dashed;
 }
+
+button.link-style-btn{
+	font-size: 1.2em;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #0033cc;
+}
+button.link-style-btn:hover{
+  text-decoration: underline;
+  color: #002080;
+}
+.inline-block {
+    display: inline-block;      /* インラインブロック要素にする */
+    height:  200px;             /* 高さ指定 */
+    width: 200px;                 /* 幅指定 */
+}

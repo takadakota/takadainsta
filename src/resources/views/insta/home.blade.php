@@ -15,38 +15,8 @@
           @endif
           <a href="/beforetweet">投稿</a></center>
         </header>
-        <script>
-        function submitProfile(){
-          //formオブジェクトを取得する
-          var fm = document.getElementById("submit");
-          //Submit形式指定する（post/get）
-          fm.method = "post";  // 例）POSTに指定する、追記:action、methodともにhtml内に記述だとエラーだった
-          //action先を指定する
-          fm.action = "/profile";  // 例）"/php/sample.php"に指定する
-          //Submit実行
-          fm.submit();
-        }
-        function submitFavoritesuser(){
-          //formオブジェクトを取得する
-          var fm = document.getElementById("submit");
-          //Submit形式指定する（post/get）
-          fm.method = "post";  // 例）POSTに指定する、追記:action、methodともにhtml内に記述だとエラーだった
-          //action先を指定する
-          fm.action = "/favoritesuser";  // 例）"/php/sample.php"に指定する
-          //Submit実行
-          fm.submit();
-        }
-        </script>
     </head>
     <body>
-    @if ($errors->any())
-      <h2>エラーメッセージ</h2>
-      <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    @endif
       <div class="d-flex justify-content-center">
         <ol>
         @isset ($Tweet)
@@ -57,10 +27,10 @@
         <table class="smallframetable" width="300" height="380" align="center">
           <tr>
             <th align="center" style="border-style: none;">
-              <form id="submit">
+              <form action="{{ url('/profile') }}" method="POST">
                 <input type="hidden" name="user_id" value="{{ $tweet->user_id }}">
                 {{ csrf_field() }}
-                <a href="javascript:submitProfile();">{{ $tweet->username }}</a>
+                <button class="link-style-btn">{{ $tweet->username }}</button>
               </form>
             </th>
             <th align="right" style="border-style: none;">
@@ -81,10 +51,10 @@
           </tr>
           <tr>
             <th align="left" style="border-style: none;">
-              <form id="submit">
+              <form action="{{ url('/favoritesuser') }}" method="POST">
                 <input type="hidden" name="tweet_id" value="{{ $tweet->tweet_id }}">
                 {{ csrf_field() }}
-                <a href="javascript:submitFavoritesuser()">いいねした人</a>
+                <button class="link-style-btn">いいねした人</button>
               </form>
             </th>
             @if( Auth::check() )
