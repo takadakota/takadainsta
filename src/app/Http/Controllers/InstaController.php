@@ -83,16 +83,17 @@ class InstaController extends Controller
                 'caption' => 'required|max:200',//Viewにもerror出力文書いたけど下のelse以下で処理してる？、とりあえず動くのでこのまま
             ]);
 
-      if ($request->file('file')->isValid([])) {//ファイルの中身があるなら
-          $path = $request->file('file')->store('public');//ツイートされた画像を保存
-          $filename = basename($path);//basename()→（）のいる場所を除いたパスデータ
+      if ($request->file('image')->isValid([])) {//ファイルの中身があるなら
+          //$path = $request->file('file')->store('public');//ツイートされた画像を保存
+          //$image = basename($path);//basename()→（）のいる場所を除いたパスデータ
+          $image = base64_encode(file_get_contents($request->image->getRealPath()));
           $caption = $request -> input('caption');//inputの使い方とか時間があれば細かく見たい、requestとセットで使うのでは
           $user = Auth::user();//Userテーブルからget()で持ってくるとデータがコレクション型で　"カラム名:〜"　みたいになる
           $user_id = $user->user_id;
           $username = $user->username;
           $avatar = $user->avatar;
           $now = date("Y/m/d H:i:s");//ツイートしたときの日付時刻データ、降順するのに使う
-          $tweet_id = Tweet::create(['user_id'=>$user_id,'username'=>$username ,'avatar'=>$avatar, 'imagepath'=>$filename , 'caption'=>$caption ,'created_at'=>$now, 'updated_at'=>$now]);
+          $tweet_id = Tweet::create(['user_id'=>$user_id,'username'=>$username ,'avatar'=>$avatar, 'image'=>$image , 'caption'=>$caption ,'created_at'=>$now, 'updated_at'=>$now]);
           Favorite::create(['tweet_id'=>$tweet_id->tweet_id ,'user_id'=>$user_id,'favorite'=>null,'created_at'=>$now, 'updated_at'=>$now]);
           return redirect('/home');//redirectにした、そのため「, ["Tweet" => $Tweet]」の引数渡しはルーティング後のhome関数で呼び出されてる
       }else {

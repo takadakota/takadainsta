@@ -18,7 +18,7 @@ class CreateTweetsTable extends Migration
             $table->string('user_id')->nullable();
             $table->string('username')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('imagepath')->nullable();
+            $table->text('image')->nullable();//1/7大詰めHerokuでの画像表示
             $table->string('caption')->nullable();
             $table->timestamps();
         });

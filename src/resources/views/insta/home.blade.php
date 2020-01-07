@@ -44,7 +44,7 @@
             </th>
           </tr>
           <tr>
-            <th height="250" colspan="2"><img src="{{ asset('storage/' . $tweet->imagepath) }}" class="inner_photo"></th>
+            <th height="250" colspan="2"><img src="data:image/png;base64,<?= image ?>" class="inner_photo"></th>
           </tr>
           <tr>
             <td align="left" valign="top" height="100" colspan="2" style="border-style: none;">{{$tweet->caption}}</td>

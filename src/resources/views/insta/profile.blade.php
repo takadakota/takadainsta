@@ -29,7 +29,7 @@
       @isset ($usertweet)
       @foreach($usertweet as $tweet)
         <div class="inline-block">
-          <img src="{{ asset('storage/' . $tweet->imagepath) }}" class="usertweetimg">
+          <img src="data:image/png;base64,<?= image ?>" class="usertweetimg">
         </div>
       @endforeach
       @endisset
