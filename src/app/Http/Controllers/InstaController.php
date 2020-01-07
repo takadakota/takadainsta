@@ -69,8 +69,6 @@ class InstaController extends Controller
     {
       $request->validate([
         'file' => [
-            // 必須
-            'required',//kbyte、60MBが最大という制約
             // アップロードされたファイルであること
             'file',
             // 画像ファイルであること
@@ -93,8 +91,8 @@ class InstaController extends Controller
           $username = $user->username;
           $avatar = $user->avatar;
           $now = date("Y/m/d H:i:s");//ツイートしたときの日付時刻データ、降順するのに使う
-          $tweet_id = Tweet::create(['user_id'=>$user_id,'username'=>$username ,'avatar'=>$avatar, 'image'=>$image , 'caption'=>$caption ,'created_at'=>$now, 'updated_at'=>$now]);
-          Favorite::create(['tweet_id'=>$tweet_id->tweet_id ,'user_id'=>$user_id,'favorite'=>null,'created_at'=>$now, 'updated_at'=>$now]);
+          $tweet = Tweet::create(['user_id'=>$user_id,'username'=>$username ,'avatar'=>$avatar, 'image'=>$image , 'caption'=>$caption ,'created_at'=>$now, 'updated_at'=>$now]);
+          Favorite::create(['tweet_id'=>$tweet->tweet_id ,'user_id'=>$user_id,'favorite'=>null,'created_at'=>$now, 'updated_at'=>$now]);
           return redirect('/home');//redirectにした、そのため「, ["Tweet" => $Tweet]」の引数渡しはルーティング後のhome関数で呼び出されてる
       }else {
           return redirect()

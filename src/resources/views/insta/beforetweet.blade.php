@@ -10,20 +10,7 @@
           <a href="/logout">ログアウト</a>
           <a href="/beforetweet">投稿</a></center>
         </header>
-        <script>
-          $('#image').change(function(){
-            if (this.files.length > 0) {
-              // 選択されたファイル情報を取得
-              var file = this.files[0];
-              // readerのresultプロパティに、データURLとしてエンコードされたファイルデータを格納
-              var reader = new FileReader();
-              reader.readAsDataURL(file);
-              reader.onload = function() {
-                $('#thumbnail').attr('src', reader.result );
-              }
-            }
-          });
-        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     </head>
     <body>
     <center><h1>tweet画面</h1>
@@ -31,9 +18,9 @@
     <form action="{{ url('home') }}" method="POST" enctype="multipart/form-data">
         <label for="photo">投稿画像選択</label>
         <br>
-        <input type="file" class="form-control" name="image">
+        <input type="file" class="form-control" id="upfile" name="image">
         <br>
-        <div><img id="thumbnail" src=""></div>
+        <img id="thumbnail" src="">
         <br>
         つぶやき内容
         <br>
@@ -42,6 +29,21 @@
         {{ csrf_field() }}
         <button class="btn btn-success"> つぶやく </button>
     </form>
+    <!-- scriptの位置ここじゃないとダメぽい -->
+    <script>
+      $('#upfile').change(function(){
+        if (this.files.length > 0) {
+          // 選択されたファイル情報を取得
+          var file = this.files[0];
+          // readerのresultプロパティに、データURLとしてエンコードされたファイルデータを格納
+          var reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = function() {
+            $('#thumbnail').attr('src', reader.result );
+          }
+        }
+      });
+    </script>
   </center>
     </body>
 </html>
