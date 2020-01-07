@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tweet extends Model
 {
     protected $primaryKey = 'tweet_id';//これがないと主キーが変更できないらしい
-    protected $fillable = ['user_id','username','imagepath','caption','avatar']; //12/10username追加
+    protected $fillable = ['user_id','username','imagepath','caption']; //12/10username追加
     /**
      * リレーション１２２３
      */

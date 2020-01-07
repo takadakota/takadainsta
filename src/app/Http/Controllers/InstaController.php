@@ -68,7 +68,7 @@ class InstaController extends Controller
     public function upload(Request $request)//画像とテキストが送られてくる。ここではそれらをテーブルに入れたい。
     {
       $request->validate([
-        'file' => [
+         'file' => [
             // アップロードされたファイルであること
             'file',
             // 画像ファイルであること
@@ -84,14 +84,17 @@ class InstaController extends Controller
       if ($request->file('image')->isValid([])) {//ファイルの中身があるなら
           //$path = $request->file('file')->store('public');//ツイートされた画像を保存
           //$image = basename($path);//basename()→（）のいる場所を除いたパスデータ
-          $image = base64_encode(file_get_contents($request->image->getRealPath()));
+          $image = base64_encode(file_get_contents($request->image->getRealPath()));//ファイルパスを取得→ファイルパスからデータを取得→エンコード
           $caption = $request -> input('caption');//inputの使い方とか時間があれば細かく見たい、requestとセットで使うのでは
           $user = Auth::user();//Userテーブルからget()で持ってくるとデータがコレクション型で　"カラム名:〜"　みたいになる
           $user_id = $user->user_id;
           $username = $user->username;
           $avatar = $user->avatar;
           $now = date("Y/m/d H:i:s");//ツイートしたときの日付時刻データ、降順するのに使う
-          $tweet = Tweet::create(['user_id'=>$user_id,'username'=>$username ,'avatar'=>$avatar, 'image'=>$image , 'caption'=>$caption ,'created_at'=>$now, 'updated_at'=>$now]);
+          Tweet::insert(['user_id'=>$user_id,'username'=>$username, 'image'=>$image , 'caption'=>$caption ,'created_at'=>$now, 'updated_at'=>$now]);
+          $tweet = Tweet::orderBy('created_at', 'desc')->first();
+          //createで普通に１行で書きたかったけどinsertじゃないとバイナリデータは入らない？？？？？
+          //だから対応させるためにめっちゃ周りくどく書いてる、横着するとtweet_idないですとか言われる
           Favorite::create(['tweet_id'=>$tweet->tweet_id ,'user_id'=>$user_id,'favorite'=>null,'created_at'=>$now, 'updated_at'=>$now]);
           return redirect('/home');//redirectにした、そのため「, ["Tweet" => $Tweet]」の引数渡しはルーティング後のhome関数で呼び出されてる
       }else {

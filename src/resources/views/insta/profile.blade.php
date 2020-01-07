@@ -29,7 +29,7 @@
       @isset ($usertweet)
       @foreach($usertweet as $tweet)
         <div class="inline-block">
-          <img src="data:image/png;base64,$tweet->image" class="usertweetimg">
+          <img src="data:image/png;base64,<?= $tweet->image ?>" class="usertweetimg">
         </div>
       @endforeach
       @endisset
