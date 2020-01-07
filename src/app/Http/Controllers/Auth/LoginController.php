@@ -65,7 +65,7 @@ class LoginController extends Controller
      */
      public function handleProviderCallback(Request $request)//上のメソッドのredirectでここにくる、config/service参照
      {
-         $github_user = Socialite::driver('github')->user();//'github'から送られたユーザ情報を取得
+         $github_user = Socialite::driver('github')->stateless()->user();//'github'から送られたユーザ情報を取得
          $github_avatar = $github_user->avatar;
          $instausers=User::firstOrCreate(['username'=>$github_user->user['login'],'avatar'=>$github_avatar]);//あったら取り出す、なきゃつくる
          auth()->login($instausers);//ログイン
