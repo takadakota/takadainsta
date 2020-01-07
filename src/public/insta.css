@@ -125,6 +125,11 @@ img {
 	height: 200px;
 	object-fit: contain;
 }
+.thumbnailimg{
+	width: 300px;
+	height: 300px;
+	object-fit: contain;
+}
 
 th,td {/*テーブルの見た目変えてるだけ*/
 		    border: solid 1px;              /* 枠線指定 */

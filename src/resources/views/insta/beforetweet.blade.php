@@ -20,7 +20,7 @@
         <br>
         <input type="file" class="form-control" id="upfile" name="image">
         <br>
-        <img width="300" height="300" id="thumbnail" src="">
+        <img id="thumbnail" class="thumbnailimg" src="">
         <br>
         つぶやき内容
         <br>
