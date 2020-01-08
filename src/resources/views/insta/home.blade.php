@@ -34,7 +34,7 @@
               </form>
             </th>
             <th align="right" style="border-style: none;">
-              @if( Auth::check() )
+              @if( Auth::id()==$tweet->user_id )
                 <form action="{{ url('/delete') }}" method="POST">
                   <input type="hidden" name="delete_id" value="{{ $tweet->tweet_id }}">
                   {{ csrf_field() }}

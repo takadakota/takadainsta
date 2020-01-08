@@ -15,9 +15,9 @@ class CreateFavoritesTable extends Migration
     {
         Schema::create('favorites', function (Blueprint $table) {
             $table->bigIncrements('favorite_id');//主キーが必要だから雑にデフォとしておく
-            $table->string('user_id');//intなの不安。string?せめてlong?
-            $table->string('tweet_id');
-            $table->string('favorite')->nullable();
+            $table->biginteger('user_id');//intなの不安。string?せめてlong?
+            $table->biginteger('tweet_id');
+            $table->int('favorite')->nullable();
             $table->timestamps();
         });
     }

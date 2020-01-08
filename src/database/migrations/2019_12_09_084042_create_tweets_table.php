@@ -15,7 +15,7 @@ class CreateTweetsTable extends Migration
     {
         Schema::create('tweets', function (Blueprint $table) {
             $table->bigIncrements('tweet_id');
-            $table->string('user_id')->nullable();
+            $table->biginteger('user_id')->nullable();
             $table->string('username')->nullable();
             $table->text('image')->nullable();//1/7大詰めHerokuでの画像表示
             $table->string('caption')->nullable();
