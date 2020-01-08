@@ -27,16 +27,4 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
-//Route::get('/', function () {return view('welcome');});
-//Route::get('/user', 'UserController@index');
-//Route::get('/takadakota', 'TakadaController@index');
-//Route::get('/bbs', 'BbsController@index');
-//Route::post('/bbs', 'BbsController@create');
-//Route::get('github', 'Github\GithubController@top');
-//Route::post('github/issue', 'Github\GithubController@createIssue');
-
-//Route::post('user', 'User\UserController@updateUser');
-//Route::get('/', 'HomeController@index');
-//Route::post('/upload', 'HomeController@upload');
-
 //Route::get('/home', 'HomeController@index')->name('home');//ver6.Xに従ってDLしたらなんか追加された
